@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Cek Slip Gaji</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 50px;
+      max-width: 400px;
+    }
+    input, button {
+      margin-top: 8px;
+      width: 100%;
+      padding: 8px;
+    }
+    label {
+      margin-top: 12px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h2>Cek Slip Gaji Rider</h2>
+  <form method="POST" action="https://script.google.com/macros/s/AKfycbynIdD0pWndrTirrROj-GUmUxwZ5O76X7gHq9itjTDUV6Sq3MnoJAeK4EyLDJFsZQDX/exec">
+    <label for="id">ID Rider:</label>
+    <input type="text" id="id" name="id" required>
+
+    <label for="periode">Periode:</label>
+    <input type="text" id="periode" name="periode" placeholder="Contoh: Agustus 2025" required>
+
+    <label for="passkey">Passkey:</label>
+    <input type="password" id="passkey" name="passkey" required>
+
+    <button type="submit">Cek Slip</button>
+  </form>
+</body>
+</html>
