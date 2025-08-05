@@ -7,7 +7,7 @@
     body {
       font-family: sans-serif;
       margin: 50px;
-      max-width: 400px;
+      max-width: 600px;
     }
     input, button {
       margin-top: 8px;
@@ -18,11 +18,24 @@
       margin-top: 12px;
       display: block;
     }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
   </style>
 </head>
 <body>
   <h2>Cek Slip Gaji Rider</h2>
-  <form method="POST" action="https://script.google.com/macros/s/AKfycbxwauQjLf2bSgfPb60Flfh5A-edYufCheBLJ5q7E2c/dev">
+  <form id="form-gaji">
     <label for="id">ID Rider:</label>
     <input type="text" id="id" name="id" required>
 
@@ -34,70 +47,72 @@
 
     <button type="submit">Cek Slip</button>
   </form>
+
   <!-- TABEL SLIP GAJI -->
-<div id="slip-gaji" style="display:none; margin-top: 20px;">
-  <h2>Slip Gaji</h2>
-  <table border="1" cellpadding="8" cellspacing="0">
-    <tr><th>Nama</th><td id="nama"></td></tr>
-    <tr><th>No Rekening</th><td id="norek"></td></tr>
-    <tr><th>Bank</th><td id="bank"></td></tr>
-    <tr><th>Bulky</th><td id="bulky"></td></tr>
-    <tr><th>Non Bulky</th><td id="nonbulky"></td></tr>
-    <tr><th>Komisi Bulky</th><td id="komisi_bulky"></td></tr>
-    <tr><th>Komisi Non Bulky</th><td id="komisi_nonbulky"></td></tr>
-    <tr><th>Incentive</th><td id="incentive"></td></tr>
-    <tr><th>Total</th><td id="total"></td></tr>
-    <tr><th>Deposit</th><td id="deposit"></td></tr>
-    <tr><th>Insurance</th><td id="insurance"></td></tr>
-    <tr><th>Claim</th><td id="claim"></td></tr>
-    <tr><th>Total 2</th><td id="total2"></td></tr>
-    <tr><th>Total Komisi</th><td id="total_komisi"></td></tr>
-  </table>
-</div>
-<script>
-  // Tambahkan fungsi ini
-  function tampilkanSlipGaji(data) {
-    document.getElementById("nama").textContent = data.nama;
-    document.getElementById("norek").textContent = data.norek;
-    document.getElementById("bank").textContent = data.bank;
-    document.getElementById("bulky").textContent = data.bulky;
-    document.getElementById("nonbulky").textContent = data.nonbulky;
-    document.getElementById("komisi_bulky").textContent = data.komisi_bulky;
-    document.getElementById("komisi_nonbulky").textContent = data.komisi_nonbulky;
-    document.getElementById("incentive").textContent = data.incentive;
-    document.getElementById("total").textContent = data.total;
-    document.getElementById("deposit").textContent = data.deposit;
-    document.getElementById("insurance").textContent = data.insurance;
-    document.getElementById("claim").textContent = data.claim;
-    document.getElementById("total2").textContent = data.total2;
-    document.getElementById("total_komisi").textContent = data.total_komisi;
+  <div id="slip-gaji" style="display:none;">
+    <h2>Slip Gaji</h2>
+    <table>
+      <tr><th>Nama</th><td id="nama"></td></tr>
+      <tr><th>No Rekening</th><td id="norek"></td></tr>
+      <tr><th>Bank</th><td id="bank"></td></tr>
+      <tr><th>Bulky</th><td id="bulky"></td></tr>
+      <tr><th>Non Bulky</th><td id="nonbulky"></td></tr>
+      <tr><th>Komisi Bulky</th><td id="komisi_bulky"></td></tr>
+      <tr><th>Komisi Non Bulky</th><td id="komisi_nonbulky"></td></tr>
+      <tr><th>Incentive</th><td id="incentive"></td></tr>
+      <tr><th>Total</th><td id="total"></td></tr>
+      <tr><th>Deposit</th><td id="deposit"></td></tr>
+      <tr><th>Insurance</th><td id="insurance"></td></tr>
+      <tr><th>Claim</th><td id="claim"></td></tr>
+      <tr><th>Total 2</th><td id="total2"></td></tr>
+      <tr><th>Total Komisi</th><td id="total_komisi"></td></tr>
+    </table>
+  </div>
 
-    document.getElementById("slip-gaji").style.display = "block";
-  }
+  <script>
+    function tampilkanSlipGaji(data) {
+      document.getElementById("nama").textContent = data.nama;
+      document.getElementById("norek").textContent = data.norek;
+      document.getElementById("bank").textContent = data.bank;
+      document.getElementById("bulky").textContent = data.bulky;
+      document.getElementById("nonbulky").textContent = data.nonbulky;
+      document.getElementById("komisi_bulky").textContent = data.komisi_bulky;
+      document.getElementById("komisi_nonbulky").textContent = data.komisi_nonbulky;
+      document.getElementById("incentive").textContent = data.incentive;
+      document.getElementById("total").textContent = data.total;
+      document.getElementById("deposit").textContent = data.deposit;
+      document.getElementById("insurance").textContent = data.insurance;
+      document.getElementById("claim").textContent = data.claim;
+      document.getElementById("total2").textContent = data.total2;
+      document.getElementById("total_komisi").textContent = data.total_komisi;
 
-  // Form handler
-  document.getElementById("form-gaji").addEventListener("submit", function(e) {
-    e.preventDefault();
+      document.getElementById("slip-gaji").style.display = "block";
+    }
 
-    const id = document.getElementById("id").value;
-    const periode = document.getElementById("periode").value;
-    const passkey = document.getElementById("passkey").value;
+    document.getElementById("form-gaji").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-    const url = "https://script.google.com/macros/s/AKfycbxxxxx/exec"; // ganti dengan URL Web App kamu
-    const params = `id=${id}&periode=${periode}&passkey=${passkey}`;
+      const id = document.getElementById("id").value;
+      const periode = document.getElementById("periode").value;
+      const passkey = document.getElementById("passkey").value;
 
-    fetch(url, {
-      method: "POST",
-      body: new URLSearchParams(params)
-    })
-    .then(res => res.json())
-    .then(data => tampilkanSlipGaji(data))
-    .catch(err => {
-      alert("Data tidak ditemukan atau salah.");
-      document.getElementById("slip-gaji").style.display = "none";
+      const url = "https://script.google.com/macros/s/AKfycbwxxx/exec"; // Ganti dengan URL Web App kamu
+      const params = new URLSearchParams({ id, periode, passkey });
+
+      fetch(url, {
+        method: "POST",
+        body: params
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP Error");
+        return res.json();
+      })
+      .then(data => tampilkanSlipGaji(data))
+      .catch(() => {
+        alert("Data tidak ditemukan atau salah.");
+        document.getElementById("slip-gaji").style.display = "none";
+      });
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
