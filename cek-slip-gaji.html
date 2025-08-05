@@ -1,57 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cek Slip Gaji Rider</title>
   <meta charset="UTF-8">
+  <title>Cek Slip Gaji</title>
 </head>
 <body>
-  <h2>Cek Slip Gaji</h2>
-  <form id="formGaji">
-    Nama Rider: <input type="text" id="nama" required><br><br>
-    Periode: <input type="text" id="periode" required placeholder="Misal: Agustus 2025"><br><br>
-    Passkey: <input type="password" id="passkey" required><br><br>
+  <h1>Cek Slip Gaji Rider</h1>
+  <form method="POST" action="https://script.google.com/macros/s/AKfycbynIdD0pWndrTirrROj-GUmUxwZ5O76X7gHq9itjTDUV6Sq3MnoJAeK4EyLDJFsZQDX/exec">
+    <label for="id">ID Rider:</label>
+    <input type="text" id="id" name="id" required>
+    <br>
+    <label for="periode">Periode:</label>
+    <input type="text" id="periode" name="periode" required>
+    <br>
+    <label for="passkey">Passkey:</label>
+    <input type="password" id="passkey" name="passkey" required>
+    <br>
     <button type="submit">Cek Slip</button>
   </form>
-
-  <hr>
-  <div id="hasil"></div>
-
-  <script>
-    const form = document.getElementById('formGaji');
-    const hasilDiv = document.getElementById('hasil');
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const nama = document.getElementById('nama').value;
-      const periode = document.getElementById('periode').value;
-      const passkey = document.getElementById('passkey').value;
-
-      fetch(`https://script.google.com/macros/s/PASTE_URL_MU/exec?nama=${encodeURIComponent(nama)}&periode=${encodeURIComponent(periode)}&passkey=${encodeURIComponent(passkey)}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data.error) {
-            hasilDiv.innerHTML = `<p style="color:red">${data.error}</p>`;
-          } else {
-            hasilDiv.innerHTML = `
-              <h3>Slip Gaji - ${data.periode}</h3>
-              <p><strong>Nama:</strong> ${data.nama}</p>
-              <p><strong>Lokasi:</strong> ${data.lokasi}</p>
-              <p><strong>Rekening:</strong> ${data.norek} (${data.bank})</p>
-              <p><strong>Komisi Bulky:</strong> Rp${data.komisiBulky.toLocaleString()}</p>
-              <p><strong>Komisi Non-Bulky:</strong> Rp${data.komisiNonBulky.toLocaleString()}</p>
-              <p><strong>Incentive:</strong> Rp${data.incentive.toLocaleString()}</p>
-              <p><strong>Deposit:</strong> Rp${data.deposit.toLocaleString()}</p>
-              <p><strong>Insurance:</strong> Rp${data.insurance.toLocaleString()}</p>
-              <p><strong>Claim:</strong> Rp${data.claim.toLocaleString()}</p>
-              <p><strong>Total:</strong> Rp${data.total.toLocaleString()}</p>
-              <p><strong>Total Komisi:</strong> <b>Rp${data.totalKomisi.toLocaleString()}</b></p>
-            `;
-          }
-        })
-        .catch(() => {
-          hasilDiv.innerHTML = "<p style='color:red'>Gagal mengambil data.</p>";
-        });
-    });
-  </script>
 </body>
 </html>
