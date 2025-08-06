@@ -39,9 +39,6 @@
     <label for="id">ID Rider:</label>
     <input type="text" id="id" name="id" required>
 
-    <label for="periode">Periode:</label>
-    <input type="text" id="periode" name="periode" placeholder="Contoh: Agustus 2025" required>
-
     <label for="passkey">Passkey:</label>
     <input type="password" id="passkey" name="passkey" required>
 
@@ -93,11 +90,10 @@
       e.preventDefault();
 
       const id = document.getElementById("id").value;
-      const periode = document.getElementById("periode").value;
       const passkey = document.getElementById("passkey").value;
 
-      const url = "https://script.google.com/macros/s/AKfycbwWaHkzJp4GXQXcru5zn-4Lbraqxrh4fvYQY2KgQawGXvyD_s9RqttIJKzWmTCUQ7HG/exec"; // Ganti dengan URL Web App kamu
-      const params = new URLSearchParams({ id, periode, passkey });
+      const url = "https://script.google.com/macros/s/AKfycbwWaHkzJp4GXQXcru5zn-4Lbraqxrh4fvYQY2KgQawGXvyD_s9RqttIJKzWmTCUQ7HG/exec";
+      const params = new URLSearchParams({ id, passkey });
 
       fetch(url, {
         method: "POST",
