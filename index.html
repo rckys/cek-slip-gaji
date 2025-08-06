@@ -50,6 +50,7 @@
     <h2>Slip Gaji</h2>
     <table>
       <tr><th>Nama</th><td id="nama"></td></tr>
+      <tr><th>Periode</th><td id="periode"></td></tr> <!-- Tambahan -->
       <tr><th>No Rekening</th><td id="norek"></td></tr>
       <tr><th>Bank</th><td id="bank"></td></tr>
       <tr><th>Bulky</th><td id="bulky"></td></tr>
@@ -69,9 +70,9 @@
   <script>
     function tampilkanSlipGaji(data) {
       document.getElementById("nama").textContent = data.nama;
+      document.getElementById("periode").textContent = data.periode; // pastikan ini tersedia dari backend
       document.getElementById("norek").textContent = data.norek;
       document.getElementById("bank").textContent = data.bank;
-      document.getElementById("periode").textContent = data.periode;
       document.getElementById("bulky").textContent = data.bulky;
       document.getElementById("nonbulky").textContent = data.nonbulky;
       document.getElementById("komisi_bulky").textContent = data.komisi_bulky;
