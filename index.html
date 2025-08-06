@@ -1,42 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Cek Slip Gaji</title>
+  <title>Cek Slip Gaji Rider</title>
   <style>
     body {
-      font-family: sans-serif;
-      margin: 50px;
-      max-width: 500px;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
     }
-    input, button {
-      margin-top: 8px;
-      width: 100%;
-      padding: 10px;
-      font-size: 14px;
+    h2 {
+      color: #333;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
     }
     label {
-      margin-top: 12px;
       display: block;
+      margin-top: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      background: #007bff;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
     }
     .result {
       margin-top: 20px;
       padding: 15px;
-      border: 1px solid #ccc;
-      display: none;
-      background: #f9f9f9;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
     }
-    a.download-btn {
+    .result a {
       display: inline-block;
       padding: 10px 15px;
-      background: #4CAF50;
+      background: green;
       color: white;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 4px;
+    }
+    .result a:hover {
+      background: darkgreen;
     }
   </style>
 </head>
 <body>
+
   <h2>Cek Slip Gaji Rider</h2>
   <form id="form-gaji">
     <label for="id">ID Rider:</label>
@@ -48,40 +79,44 @@
     <button type="submit">Cek Slip</button>
   </form>
 
-  <div class="result" id="result">
-    <p><strong>Nama:</strong> <span id="nama"></span></p>
-    <p><strong>Periode:</strong> <span id="periode"></span></p>
-    <a id="downloadLink" class="download-btn" target="_blank">Download Slip Gaji (PDF)</a>
+  <div id="result" class="result" style="display:none;">
+    <p><b>Nama:</b> <span id="nama"></span></p>
+    <p><b>Periode:</b> <span id="periode"></span></p>
+    <a id="link_pdf" target="_blank">Download Slip Gaji PDF</a>
   </div>
 
   <script>
     document.getElementById("form-gaji").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      const id = document.getElementById("id").value;
-      const passkey = document.getElementById("passkey").value;
+      const id = document.getElementById("id").value.trim();
+      const passkey = document.getElementById("passkey").value.trim();
 
-      const url = "https://script.google.com/macros/s/AKfycbw0tthARoNzc2mfh8PgbKdt7lccd2LpYMc6tKov7Cl4k6QqWF6pq0dBJIYcsWlemXtg/exec"; // Ganti dengan URL Web App kamu
-      const params = new URLSearchParams({ id, passkey });
+      // Ganti URL ini dengan URL Web App Apps Script kamu
+      const url = "https://script.google.com/macros/s/AKfycbw0tthARoNzc2mfh8PgbKdt7lccd2LpYMc6tKov7Cl4k6QqWF6pq0dBJIYcsWlemXtg/exec";
 
-      fetch(url, { method: "POST", body: params })
-        .then(res => res.json())
-        .then(data => {
-          if (data.link) {
-            document.getElementById("nama").textContent = data.nama || "-";
-            document.getElementById("periode").textContent = data.periode || "-";
-            document.getElementById("downloadLink").href = data.link;
-            document.getElementById("result").style.display = "block";
-          } else {
-            alert(data.error || "Data tidak ditemukan");
-            document.getElementById("result").style.display = "none";
-          }
-        })
-        .catch(() => {
-          alert("Terjadi kesalahan koneksi.");
+      fetch(url, {
+        method: "POST",
+        body: new URLSearchParams({ id, passkey })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          alert(data.error);
           document.getElementById("result").style.display = "none";
-        });
+        } else {
+          document.getElementById("nama").textContent = data.nama;
+          document.getElementById("periode").textContent = data.periode;
+          document.getElementById("link_pdf").href = data.link_pdf;
+          document.getElementById("result").style.display = "block";
+        }
+      })
+      .catch(err => {
+        alert("Terjadi kesalahan koneksi!");
+        console.error(err);
+      });
     });
   </script>
+
 </body>
 </html>
