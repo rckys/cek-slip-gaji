@@ -61,7 +61,7 @@
       const id = document.getElementById("id").value;
       const passkey = document.getElementById("passkey").value;
 
-      const url = "URL_WEB_APP_APPS_SCRIPT"; // Ganti dengan URL Web App kamu
+      const url = "https://script.google.com/macros/s/AKfycbzY1Ny3tjhS7mmJWoKMlbC_fMtt4uSgCLuhVxI5_soSwxoq6SkGoBBAYvvDW5s-LK4c/exec"; // Ganti dengan URL Web App kamu
       const params = new URLSearchParams({ id, passkey });
 
       fetch(url, { method: "POST", body: params })
