@@ -64,6 +64,25 @@
     .result a:hover {
       background: darkgreen;
     }
+    /* Loader Style */
+    #loader {
+      display: none;
+      text-align: center;
+      margin-top: 15px;
+    }
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #007bff;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -79,6 +98,13 @@
     <button type="submit">Cek Slip</button>
   </form>
 
+  <!-- Loader -->
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>Sedang memproses...</p>
+  </div>
+
+  <!-- Hasil -->
   <div id="result" class="result" style="display:none;">
     <p><b>Nama:</b> <span id="nama"></span></p>
     <p><b>Periode:</b> <span id="periode"></span></p>
@@ -92,7 +118,13 @@
       const id = document.getElementById("id").value.trim();
       const passkey = document.getElementById("passkey").value.trim();
 
-      // Ganti URL ini dengan URL Web App Apps Script kamu
+      const loader = document.getElementById("loader");
+      const result = document.getElementById("result");
+
+      // Tampilkan loader & sembunyikan hasil lama
+      loader.style.display = "block";
+      result.style.display = "none";
+
       const url = "https://script.google.com/macros/s/AKfycbzgTEBI-OMpmqOTt_Ge9Po0CJI8u5rSfbigDs51vLpABavGGoG4FEHGMCidavLPKwXz/exec";
 
       fetch(url, {
@@ -101,17 +133,19 @@
       })
       .then(res => res.json())
       .then(data => {
+        loader.style.display = "none"; // sembunyikan loader
+
         if (data.error) {
           alert(data.error);
-          document.getElementById("result").style.display = "none";
         } else {
           document.getElementById("nama").textContent = data.nama;
           document.getElementById("periode").textContent = data.periode;
           document.getElementById("link_pdf").href = data.link_pdf;
-          document.getElementById("result").style.display = "block";
+          result.style.display = "block";
         }
       })
       .catch(err => {
+        loader.style.display = "none"; // sembunyikan loader
         alert("Terjadi kesalahan koneksi!");
         console.error(err);
       });
